@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import BetAmount from "./components/BetAmount";
+import NumberPicker from "./components/NumberPicker";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bet: 0,
+      numbers: [],
+      isValidBet: false,
+    };
+  }
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>Whe Whe Ticket Generator</h1>
+        </header>
+        <div id="ticketArea">
+          <BetAmount bet={this.state.bet} />
+          <NumberPicker numbers={this.state.numbers} />
+        </div>
+        <div id="generateArea">
+          <h2>Cash Out</h2>
+          <button id="generate" disabled={!this.state.isValidBet}>
+            Generate Ticket
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
