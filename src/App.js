@@ -9,9 +9,32 @@ class App extends React.Component {
     this.state = {
       bet: 0,
       numbers: [],
+      // ideally probably have this as a getter instead
       isValidBet: false,
     };
+    this.handleBetClick = this.handleBetClick.bind(this);
   }
+
+  static isValidBet(bet, numbers) {
+    return bet > 0 && numbers.length === 3;
+  }
+
+  handleBetClick(bet) {
+    if (bet === 0) {
+      this.setState({ bet: 0 });
+      return;
+    }
+    // still seems to work even if I loop 10k times,
+    // this.setState({ bet: this.state.bet + bet });
+    this.setState((state) => {
+      const newBet = state.bet + bet;
+      return {
+        bet: newBet,
+        isValidBet: App.isValidBet(newBet, state.numbers),
+      };
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -19,7 +42,7 @@ class App extends React.Component {
           <h1>Whe Whe Ticket Generator</h1>
         </header>
         <div id="ticketArea">
-          <BetAmount bet={this.state.bet} />
+          <BetAmount bet={this.state.bet} onClick={this.handleBetClick} />
           <NumberPicker numbers={this.state.numbers} />
         </div>
         <div id="generateArea">
