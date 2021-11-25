@@ -36,7 +36,9 @@ class App extends React.Component {
   handleNumberClick(number) {
     this.setState((state) => {
       let newNumbers;
-      if (state.numbers.includes(number)) {
+      if (number === 0) {
+        newNumbers = [];
+      } else if (state.numbers.includes(number)) {
         newNumbers = state.numbers.filter((e) => e !== number);
       } else if (state.numbers.length === 3) {
         newNumbers = state.numbers.slice();

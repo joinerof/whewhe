@@ -21,7 +21,7 @@ button {
   color: white;
   padding: 1em;
   border-radius: 0.5em;
-  font-size: calc(5px + 1vmin);
+  font-size: calc(8px + 1.6vmin);
 }
 
 button:disabled {

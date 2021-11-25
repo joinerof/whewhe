@@ -7,8 +7,24 @@ class NumberPicker extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // pass nonnegative integers to prop
+  // special case for -3: interpret as 3 unique random values to pass to prop
   handleClick(e) {
-    this.props.onClick(parseInt(e.target.value));
+    const value = parseInt(e.target.value);
+    if (value < 0) {
+      this.props.onClick(0);
+      let randNums = [];
+      let randNum;
+      for (let i = value; i < 0; ++i) {
+        do {
+          randNum = Math.floor(Math.random() * 10 + 1);
+        } while (randNums.includes(randNum));
+        randNums.push(randNum);
+        this.props.onClick(randNum);
+      }
+    } else {
+      this.props.onClick(parseInt(e.target.value));
+    }
   }
 
   render() {
@@ -27,8 +43,12 @@ class NumberPicker extends React.Component {
         <h2>Choose 3 numbers</h2>
         <div id="numbers">{buttons}</div>
         <div>
-          <button>Random</button>
-          <button>Clear</button>
+          <button value={-3} onClick={this.handleClick}>
+            Random
+          </button>
+          <button value={0} onClick={this.handleClick}>
+            Clear
+          </button>
         </div>
       </section>
     );
